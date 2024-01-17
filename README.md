@@ -1,14 +1,10 @@
-# bcmr-generator
+# BCMR Generator
 
-This template should help get you started developing with Vue 3 in Vite.
+Fill-in form to create the BCMR Json file for a CashTokens project!
 
-## Recommended IDE Setup
+This Json file can be hosted on the web on a domain name you control or can be pinned on IPFS with [nft.storage](https://nft.storage/).
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+![Screenshot0](./screenshots/Screenshot0.png)
 
 ## Project Setup
 
@@ -16,20 +12,7 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Run Locally
 
 ```sh
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
