@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
   import { ref } from "vue"
   import { generateBcmr, validInputs } from "./generateBcmr"
   import Toggle from '@vueform/toggle'
@@ -17,13 +17,21 @@
   const nftIconType = ref("");
   const hasImages = ref(false);
 
+  const webUrl = ref("");
   const listLinks = ref([]);
   const addUri = () => {listLinks.value.push([])}
   const removeUri = () => {listLinks.value.pop()}
 
   function createBcmrFile(){
+    const date = new Date().toISOString();
+    const registryIdentityName = `bcmr for ${tokenName.value}`;
+    const registryIdentityDescription = `self-published bcmr for ${tokenName.value}`;
+
     // create object with all userInputs
     const details = {
+      date,
+      registryIdentityName,
+      registryIdentityDescription,
       tokenId: tokenId.value,
       tokenName: tokenName.value,
       tokenDescription: tokenDescription.value,
@@ -36,10 +44,11 @@
       nftDescription: nftDescription.value,
       nftIconType: nftIconType.value,
       hasImages: hasImages.value,
+      webUrl: webUrl.value,
       listLinks: listLinks.value,
     }
     const resultIsValid = validInputs(details);
-    if(!resultIsValid){
+    if(resultIsValid !== true){
       alert(resultIsValid);
       return
     }
@@ -102,7 +111,7 @@
     </div>
 
     <div>Link website</div>
-    <input placeholder="https:/example.com" id="webUrl">
+    <input v-model="webUrl" placeholder="https:/example.com">
     <div style="margin: 5px 0;">Extra Links
       <button @click="removeUri" type="button" style="padding: 3px 5px; vertical-align: text-top; margin-right: 5px;">-</button>
       <button @click="addUri" type="button" style="padding: 3px 5px; vertical-align: text-top;">+</button>
@@ -110,7 +119,7 @@
 
     <div v-for="(uriItem, index) of listLinks" v-bind:key="index">
       <div style="display: flex; margin-top: 10px;">
-        <select name="uriSelect" id="uriSelect" style="width: 150px; display: inline-block;">
+        <select name="uriSelect"  @change="(event) => listLinks[index][0] = event.target.value"  style="width: 150px; display: inline-block;">
           <option value="">- select -</option>
           <option value="image">full image</option>
           <option value="blog">blog</option>
@@ -123,7 +132,7 @@
           <option value="discord">discord</option>
           <option value="youtube">youtube</option>
         </select>
-        <input placeholder="https:/example.com" id="uriInput">
+        <input placeholder="https:/example.com" @input="(event) => listLinks[index][1] = event.target.value">
       </div>
     </div>
 

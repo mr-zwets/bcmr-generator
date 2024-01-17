@@ -1,4 +1,9 @@
 export function validInputs(details) {
+  const { tokenId, tokenName, tokenDescription, tokenSymbol, hasNftFields, numberNFTs, nftName } = details
+  let hasRequiredFields = tokenId && tokenName && tokenDescription && tokenSymbol;
+  if(hasNftFields) hasRequiredFields = hasRequiredFields && numberNFTs && nftName;
+
+  if(!hasRequiredFields) return "Fill in all the required fields before generating the JSON file!"
 
   return true
 }
@@ -57,10 +62,10 @@ export function generateBcmr(details) {
       }
     }
   }
-  /*
-  if(webUrl) snapshot.uris.web = webUrl;
-  listUris.forEach(uri => {
+  
+  if(details.webUrl) snapshot.uris.web = details.webUrl;
+  details.listLinks.forEach(uri => {
     if(uri[0] && uri[1]) snapshot.uris[uri[0]] = uri[1];
-  }) */
+  })
   return bcmrJsonObj;
 }
