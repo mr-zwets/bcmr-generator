@@ -1,1 +1,24 @@
+@import 'chota';
 
+:root {
+  --color-primary: #0ac18f;
+}
+main {
+  max-width: 750px;
+  width: 80%;
+  margin: 40px auto;
+}
+ul {
+  padding: 0;
+}
+footer{
+  margin-top: 50px;
+}
+#githubLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.githublogo {
+width: 64px;
+}
