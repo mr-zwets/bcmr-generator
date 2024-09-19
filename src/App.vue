@@ -69,7 +69,7 @@
 
 <template>
   <main>
-    <h1>BCMR generator</h1>
+    <h1>BCMR Generator</h1>
     <div style="font-weight: bold; margin-bottom: 15px;">Generate the BCMR Json file for your CashTokens project!</div>
     <div style="display: flex;justify-content: space-between;">
       TokenId *
