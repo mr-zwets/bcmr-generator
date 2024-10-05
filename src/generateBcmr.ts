@@ -1,4 +1,8 @@
-export function validInputs(details) {
+
+import type { Registry } from "./interfaces/bcmr-v2.schema.js"
+import type { DetailsObj } from "./interfaces/interfaces.js";
+
+export function validInputs(details:DetailsObj) {
   const { tokenId, tokenName, tokenDescription, tokenSymbol, hasNftFields, numberNFTs, nftName } = details
   let hasRequiredFields = tokenId && tokenName && tokenDescription && tokenSymbol;
   if(hasNftFields) hasRequiredFields = hasRequiredFields && numberNFTs && nftName;
@@ -8,7 +12,7 @@ export function validInputs(details) {
   return true
 }
 
-export function generateBcmr(details) {
+export function generateBcmr(details:DetailsObj):Registry {
   // Generate BCMR json obj
   const bcmrJsonObj = {
     "$schema": "https://cashtokens.org/bcmr-v2.schema.json",
@@ -35,8 +39,8 @@ export function generateBcmr(details) {
       }
     }
   }
-  const snapshot = bcmrJsonObj.identities[details.tokenId][details.date];
-  if(details.tokenDecimals) snapshot.token.decimals = parseInt(details.tokenDecimals);
+  const snapshot = bcmrJsonObj?.identities?.[details.tokenId][details.date] as any;
+  snapshot.token.decimals = parseInt(details.tokenDecimals);
   if(details.hasNftFields){
     snapshot.token.nfts = {
       description: "",
@@ -45,9 +49,9 @@ export function generateBcmr(details) {
       }
     };
     const NFTtypes = snapshot.token.nfts.parse.types;
-    for(let i=1; i<= details.numberNFTs; i++){
-      const nftNameNumbered = details.nftName.replace("{i}", i);
-      const nftDescriptionNumbered = details.nftDescription.replace("{i}", i);
+    for(let i=1; i <= +details.numberNFTs; i++){
+      const nftNameNumbered = details.nftName.replace("{i}", i.toString());
+      const nftDescriptionNumbered = details.nftDescription.replace("{i}", i.toString());
       let nftCommitment = i.toString(16);
       if(nftCommitment.length % 2 != 0) nftCommitment = `0${nftCommitment}`;
       NFTtypes[nftCommitment] = {
@@ -64,7 +68,7 @@ export function generateBcmr(details) {
   }
   
   if(details.webUrl) snapshot.uris.web = details.webUrl;
-  details.listLinks.forEach(uri => {
+  details.listLinks.forEach((uri: ([] | [string | undefined, string | undefined])) => {
     if(uri[0] && uri[1]) snapshot.uris[uri[0]] = uri[1];
   })
   return bcmrJsonObj;

@@ -1,7 +1,8 @@
-<script setup>
+<script setup lang="ts">
   import { ref } from "vue"
   import { generateBcmr, validInputs } from "./generateBcmr"
   import Toggle from '@vueform/toggle'
+import type { DetailsObj } from "./interfaces/interfaces";
 
   const tokenId = ref("");
   const tokenName = ref("");
@@ -19,7 +20,7 @@
   const hasImages = ref(false);
 
   const webUrl = ref("");
-  const listLinks = ref([]);
+  const listLinks = ref([] as ([] | [string | undefined, string | undefined])[]);
   const addUri = () => {listLinks.value.push([])}
   const removeUri = () => {listLinks.value.pop()}
 
@@ -29,7 +30,7 @@
     const registryIdentityDescription = `self-published bcmr for ${tokenName.value}`;
 
     // create object with all userInputs
-    const details = {
+    const details: DetailsObj = {
       date,
       registryIdentityName,
       registryIdentityDescription,
@@ -58,9 +59,9 @@
     if(bcmrJsonObj) download(JSON.stringify(bcmrJsonObj,null, 2));
   }
 
-  function download(text) {
+  function download(stringifiedObj:string){
     const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(stringifiedObj));
     element.setAttribute('download', 'bcmr.json');
     element.style.display = 'none';
     document.body.appendChild(element);
@@ -121,7 +122,7 @@
 
     <div v-for="(uriItem, index) of listLinks" v-bind:key="index">
       <div style="display: flex; margin-top: 10px;">
-        <select name="uriSelect"  @change="(event) => listLinks[index][0] = event.target.value"  style="width: 150px; display: inline-block;">
+        <select name="uriSelect"  @change="(event) => listLinks[index][0] = (event.target as HTMLInputElement).value"  style="width: 150px; display: inline-block;">
           <option value="">- select -</option>
           <option value="image">full image</option>
           <option value="blog">blog</option>
@@ -134,7 +135,7 @@
           <option value="discord">discord</option>
           <option value="youtube">youtube</option>
         </select>
-        <input placeholder="https:/example.com" @input="(event) => listLinks[index][1] = event.target.value">
+        <input placeholder="https:/example.com" @input="(event) => listLinks[index][1] = (event.target as HTMLInputElement).value">
       </div>
     </div>
 
