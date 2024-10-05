@@ -1,5 +1,5 @@
 
-import type { Registry } from "./interfaces/bcmr-v2.schema.js"
+import type { Registry, NftType } from "./interfaces/bcmr-v2.schema.js"
 import type { DetailsObj } from "./interfaces/interfaces.js";
 
 export function validInputs(details:DetailsObj) {
@@ -14,7 +14,7 @@ export function validInputs(details:DetailsObj) {
 
 export function generateBcmr(details:DetailsObj):Registry {
   // Generate BCMR json obj
-  const bcmrJsonObj = {
+  const bcmrJsonObj: Partial<Registry> = {
     "$schema": "https://cashtokens.org/bcmr-v2.schema.json",
     "version": { "major": 0, "minor": 1, "patch": 0 },
     "latestRevision": details.date,
@@ -39,7 +39,9 @@ export function generateBcmr(details:DetailsObj):Registry {
       }
     }
   }
-  const snapshot = bcmrJsonObj?.identities?.[details.tokenId][details.date] as any;
+  if(!bcmrJsonObj?.identities?.[details.tokenId][details.date]) throw new Error("Error in bcmrJsonObj")
+  const snapshot = bcmrJsonObj.identities[details.tokenId][details.date];
+  if(!snapshot?.token) throw new Error("Error in snapshot")
   snapshot.token.decimals = parseInt(details.tokenDecimals);
   if(details.hasNftFields){
     snapshot.token.nfts = {
@@ -54,7 +56,7 @@ export function generateBcmr(details:DetailsObj):Registry {
       const nftDescriptionNumbered = details.nftDescription.replace("{i}", i.toString());
       let nftCommitment = i.toString(16);
       if(nftCommitment.length % 2 != 0) nftCommitment = `0${nftCommitment}`;
-      NFTtypes[nftCommitment] = {
+      const newNftItem: NftType= {
         "name": nftNameNumbered,
         "description": nftDescriptionNumbered ,
         "uris": {
@@ -62,14 +64,16 @@ export function generateBcmr(details:DetailsObj):Registry {
         }
       }
       if(details.hasNftImages){
-        NFTtypes[nftCommitment].uris.image = details.nftIconUri + `/${i}-img.${details.nftIconType}`
+        if(!newNftItem.uris) throw new Error("Error in newNftItem.uris")
+        newNftItem.uris.image = details.nftIconUri + `/${i}-img.${details.nftIconType}`
       }
+      NFTtypes[nftCommitment] = newNftItem
     }
   }
-  
+  if(!snapshot?.uris) snapshot.uris = {}
   if(details.webUrl) snapshot.uris.web = details.webUrl;
-  details.listLinks.forEach((uri: ([] | [string | undefined, string | undefined])) => {
-    if(uri[0] && uri[1]) snapshot.uris[uri[0]] = uri[1];
-  })
-  return bcmrJsonObj;
+  for(const [key, value] of details.listLinks){
+    if(key && value) snapshot.uris[key] = value;
+  }
+  return bcmrJsonObj as Registry;
 }
