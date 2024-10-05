@@ -14,6 +14,7 @@
   const numberNFTs = ref("");
   const nftName = ref("");
   const nftDescription = ref("");
+  const nftIconUri = ref("")
   const nftIconType = ref("");
   const hasImages = ref(false);
 
@@ -42,6 +43,7 @@
       numberNFTs: numberNFTs.value,
       nftName: nftName.value,
       nftDescription: nftDescription.value,
+      nftIconUri: nftIconUri.value,
       nftIconType: nftIconType.value,
       hasImages: hasImages.value,
       webUrl: webUrl.value,
@@ -101,7 +103,7 @@
       <span style="margin-left: 10px;">Optional high-res images should be included as <code>1-img.png</code>,
         <code>2-img.png</code>, etc.<br /></span>
       <div>Link Image Folder (https or ipfs)</div>
-      <input placeholder="ipfs://bafybeifz7yag2hlxvmaahyo5kl5etajycxtxsryadcawzt4dgy3hrzzxdq" id="nftIconUri">
+      <input v-model="nftIconUri" placeholder="ipfs://bafybeifz7yag2hlxvmaahyo5kl5etajycxtxsryadcawzt4dgy3hrzzxdq">
       <div>Image Type (png, svg, ...)</div>
       <input v-model="nftIconType" placeholder="png">
       <div>
