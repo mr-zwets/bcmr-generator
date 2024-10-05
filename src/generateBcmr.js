@@ -57,8 +57,8 @@ export function generateBcmr(details) {
           "icon": details.nftIconUri + `/${i}.${details.nftIconType}`
         }
       }
-      if(details.hasNFTimages){
-         NFTtypes[nftCommitment].uris.image = details.nftIconUri + `/${i}-img.${details.nftIconType}`
+      if(details.hasNftImages){
+        NFTtypes[nftCommitment].uris.image = details.nftIconUri + `/${i}-img.${details.nftIconType}`
       }
     }
   }

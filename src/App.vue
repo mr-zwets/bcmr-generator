@@ -45,7 +45,7 @@
       nftDescription: nftDescription.value,
       nftIconUri: nftIconUri.value,
       nftIconType: nftIconType.value,
-      hasImages: hasImages.value,
+      hasNftImages: hasImages.value,
       webUrl: webUrl.value,
       listLinks: listLinks.value,
     }
