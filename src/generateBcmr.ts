@@ -4,12 +4,9 @@ import type { DetailsObj } from "./interfaces/interfaces.js";
 
 export function validInputs(details:DetailsObj) {
   const { tokenId, tokenName, tokenDescription, tokenSymbol, hasNftFields, numberNFTs, nftName } = details
-  let hasRequiredFields = tokenId && tokenName && tokenDescription && tokenSymbol;
-  if(hasNftFields) hasRequiredFields = hasRequiredFields && numberNFTs && nftName;
-
-  if(!hasRequiredFields) return "Fill in all the required fields before generating the JSON file!"
-
-  return true
+  let hasRequiredFields = Boolean(tokenId && tokenName && tokenDescription && tokenSymbol);
+  if(hasNftFields) hasRequiredFields = Boolean(hasRequiredFields && numberNFTs && nftName);
+  return hasRequiredFields
 }
 
 export function generateBcmr(details:DetailsObj):Registry {

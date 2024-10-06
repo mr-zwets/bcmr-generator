@@ -2,7 +2,7 @@
   import { ref } from "vue"
   import { generateBcmr, validInputs } from "./generateBcmr"
   import Toggle from '@vueform/toggle'
-import type { DetailsObj } from "./interfaces/interfaces";
+  import type { DetailsObj } from "./interfaces/interfaces";
 
   const tokenId = ref("");
   const tokenName = ref("");
@@ -50,9 +50,9 @@ import type { DetailsObj } from "./interfaces/interfaces";
       webUrl: webUrl.value,
       listLinks: listLinks.value,
     }
-    const resultIsValid = validInputs(details);
-    if(resultIsValid !== true){
-      alert(resultIsValid);
+    const validDetailsObj = validInputs(details);
+    if(!validDetailsObj){
+      alert("Fill in all the required fields before generating the JSON file!");
       return
     }
     const bcmrJsonObj = generateBcmr(details);
@@ -150,7 +150,6 @@ import type { DetailsObj } from "./interfaces/interfaces";
           see GitHub code
         </a>
       </div>
-
     </footer>
 
   </main>
