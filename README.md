@@ -1,6 +1,6 @@
 # BCMR Generator
 
-Fill-in form to create the BCMR Json file for a CashTokens project! Deployed at [bcmr-generator.netlify.app](https://bcmr-generator.netlify.app/).
+Fill-in form to create the BCMR Json file for a CashTokens project! Deployed at [bcmr-generator.app](https://bcmr-generator.app/).
 
 This Json file can then be hosted on the web on a domain name you control or can be pinned on IPFS.
 
