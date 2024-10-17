@@ -134,6 +134,7 @@
           <option value="reddit">reddit</option>
           <option value="discord">discord</option>
           <option value="youtube">youtube</option>
+          <option value="instagram">instagram</option>
         </select>
         <input placeholder="https:/example.com" @input="(event) => listLinks[index][1] = (event.target as HTMLInputElement).value">
       </div>
