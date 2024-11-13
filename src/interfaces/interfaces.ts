@@ -10,6 +10,8 @@ export interface DetailsObj {
   tokenDecimals: string
   hasNftFields: boolean
   numberNFTs: string
+  numbering: "hex" | "vm-numbers"
+  startingNumber: string
   nftName: string
   nftDescription: string
   nftIconUri: string
