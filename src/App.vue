@@ -13,7 +13,7 @@
 
   const hasNftFields = ref(false);
   const numberNFTs = ref("");
-  const numbering = ref("hex" as "hex" | "vm-numbers");
+  const numbering = ref("vm-numbers" as "hex" | "vm-numbers");
   const startingNumber = ref("");
   const nftName = ref("");
   const nftDescription = ref("");
@@ -101,8 +101,8 @@
       <input v-model="numberNFTs" type="number" placeholder="10">
       <div>Numbering on-chain</div>
       <select name="numbering" v-model="numbering" style="width: 350px;">
-        <option value="hex">hexadecimal (for Cashonize collections)</option>
-        <option value="vm-numbers">VM-numbers</option>
+        <option value="vm-numbers">VM-numbers (default)</option>
+        <option value="hex">hexadecimal (for old Cashonize collections)</option>
       </select>
       <div>StartingNumber *</div>
       <input v-model="startingNumber" type="number" placeholder="1">
