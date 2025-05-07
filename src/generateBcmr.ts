@@ -40,7 +40,8 @@ export function generateBcmr(details:DetailsObj):Registry {
   if(!bcmrJsonObj?.identities?.[details.tokenId][details.date]) throw new Error("Error in bcmrJsonObj")
   const snapshot = bcmrJsonObj.identities[details.tokenId][details.date];
   if(!snapshot?.token) throw new Error("Error in snapshot")
-  snapshot.token.decimals = parseInt(details.tokenDecimals);
+  const tokenDecimals = parseInt(details.tokenDecimals)
+  if(!Number.isNaN(tokenDecimals)) snapshot.token.decimals = tokenDecimals;
   if(details.hasNftFields){
     snapshot.token.nfts = {
       description: "",
